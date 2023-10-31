@@ -4,7 +4,7 @@ if(isset($_SESSION['user'])){
     header("Location: index.php");
 }
 
-$usermail = isset($_POST['username']) ? $_POST['username'] : '';
+$usermail = isset($_POST['usermail']) ? $_POST['usermail'] : '';
 $password = isset($_POST['password']) ? $_POST['password'] : '';
 
 $roles= [];
@@ -54,7 +54,7 @@ for($i=0; $i<count($roles); $i++){
                 <div class="mb-3 row">
                     <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="username" id="staticEmail">
+                        <input type="text" class="form-control" name="usermail" id="staticEmail">
                     </div>
                 </div>
                 <div class="mb-3 row">
@@ -70,6 +70,7 @@ for($i=0; $i<count($roles); $i++){
                 </p>
                 <button type="submit" class="btn btn-primary mb-3">Login</button>
             </form>
+            <p> Don't have an account? <a href="registration.php">Sign up</a></p>
 
         </div>
     </div>
