@@ -1,3 +1,10 @@
+<?php
+session_start();
+
+if(!isset($_SESSION['user'])){
+    header("Location: login.php");
+}
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -13,7 +20,16 @@
     <div class="row">
         <div class="col-md-12 text-center">
             <h1><u>Crew Project</u></h1>
-           <h2> welcome home </h2>
+           <h2> welcome home <?php echo $_SESSION['user'] ?> </h2>
+            <h4> your type of account : <?php echo $_SESSION['role'] ?> </h4>
+            <a href="logout.php">Logout</a>
+            <?php
+             if($_SESSION['role']=="admin"){ ?>
+                 <p>go to <a href="roles.php">Role Management</a> page</p>
+            <?php
+             }
+            ?>
+
         </div>
     </div>
 </div>

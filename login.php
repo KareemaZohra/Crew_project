@@ -1,9 +1,38 @@
 <?php
 session_start();
+if(isset($_SESSION['user'])){
+    header("Location: index.php");
+}
 
-$username = $_POST['username'] ? $_POST['username'] : '';
-$password = $_POST['password'] ? $_POST['password'] : '';
+$usermail = isset($_POST['username']) ? $_POST['username'] : '';
+$password = isset($_POST['password']) ? $_POST['password'] : '';
 
+$roles= [];
+$usernames = [];
+$emails = [];
+$passwords = [];
+$errorMsg = "";
+
+$fp = fopen("./data/user.txt","r");
+while ($line=fgets($fp)){
+    $values = explode(",",$line);
+    array_push($roles, trim($values[0]));
+    array_push($usernames, trim($values[1]));
+    array_push($emails, trim($values[2]));
+    array_push($passwords, trim($values[3]));
+}
+fclose($fp);
+
+for($i=0; $i<count($roles); $i++){
+    if($usermail==$emails[$i] && $password==$passwords[$i]){
+        $_SESSION['user'] = $usernames[$i];
+        $_SESSION['role'] = $roles[$i];
+        header("Location: index.php");
+    }
+    else{
+        $errorMsg = "Username or password does not match";
+    }
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -25,15 +54,20 @@ $password = $_POST['password'] ? $_POST['password'] : '';
                 <div class="mb-3 row">
                     <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="staticEmail">
+                        <input type="text" class="form-control" name="username" id="staticEmail">
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
                     <div class="col-sm-10">
-                        <input type="password" class="form-control" id="inputPassword">
+                        <input type="password" class="form-control" name="password" id="inputPassword">
                     </div>
                 </div>
+                <p class="text-danger">
+                    <?php
+                        echo $errorMsg;
+                    ?>
+                </p>
                 <button type="submit" class="btn btn-primary mb-3">Login</button>
             </form>
 

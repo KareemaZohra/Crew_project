@@ -1,0 +1,3 @@
+admin, Rahim, admin@mail.com, admin123
+manager, Karim, manager@mail.com, manager123
+user, Suman, user1@mail.com, user1123
